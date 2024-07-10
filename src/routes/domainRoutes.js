@@ -5,7 +5,7 @@ const router= Router()
 
 router.get('/list',async (req,res) =>{
     try{
-        const userId= parseInt(req.headers.userid)
+        const userId= parseInt(req.query.userId)
         if(!isNaN(userId)){
             const[rows,fields]= await pool.execute(`
                 CALL getDomainsList(?);
