@@ -13,6 +13,7 @@ const corsMiddleware = (req, res, next) => {
   //origin === URL ? next() : res.status(403).json({ error: "Forbidden" }); // Solo next para pruebas locales, esta linea para permitir localhost:4200
 };
 
+app.set('trust proxy', true);
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cors())
