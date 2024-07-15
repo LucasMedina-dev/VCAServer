@@ -29,7 +29,7 @@ router.post('/create',async (req,res) =>{
         const domain= req.body
         const userId= parseInt(domain.userId)        
         if(!isNaN(userId)){
-            const keyCode= randomBytes(30).toString('hex')
+            const keyCode= randomBytes(15).toString('hex')
            try{
                 const[rows,fields]= await pool.execute(`
                     CALL createDomain( ? , ? , ? , ?, ? , ? );    
@@ -58,15 +58,13 @@ router.post('/hit/:statId',async (req,res) =>{
             const {data}= await axios.get(`http://ip-api.com/json/181.31.237.160`)
             const ubication= `${data.country}, ${data.regionName}, ${data.city}`
             const currentUtcTime = new Date();
-            console.log(data)
             if(data.status==='fail'){
                 res.status(500).json({error: 'Geolocalizer returned error.'})
             }else{
                 const [rows,fields]= await pool.execute(`
                     CALL registerHit( ? , ? , ? , ? , ? , ?)
                 `,[parseInt(statId), '181.31.237.161', ubication, data.lat, data.lon, currentUtcTime])
-                console.log(rows)
-                res.status(200).json(rows)
+                res.status(200).send({message: "Hit sucessfuly registered."})
             }
         }catch(err){
             console.error(err)
