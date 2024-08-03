@@ -1,7 +1,6 @@
 import {Router} from 'express';
 import { pool } from '../config.js';
-import {randomBytes} from 'crypto'
-import axios from 'axios'
+import { randomBytes } from 'crypto'
 const router= Router()
 
 router.delete('/domain',async (req,res) =>{
@@ -17,7 +16,7 @@ router.delete('/domain',async (req,res) =>{
                 res.status(200).json(rows)
             }
         }else{
-            res.status(400).send({error: "domainId is undefined"})
+            res.status(400).send({error: "domainId is not valid"})
         }
         
     }catch(err){
@@ -38,7 +37,7 @@ router.put('/reset',async (req,res) =>{
                 res.status(200).json(rows)
             }
         }else{
-            res.status(400).send({error: "domainId is undefined"})
+            res.status(400).send({error: "domainId is not valid"})
         }
         
     }catch(err){
@@ -58,7 +57,7 @@ router.put('/domain',async (req,res) =>{
                 res.status(200).json(rows)
             }
         }else{
-            res.status(400).send({error: "domainId is undefined"})
+            res.status(400).send({error: "domainId is not valid"})
         }
         
     }catch(err){
@@ -78,7 +77,7 @@ router.put('/key',async (req,res) =>{
                 res.status(200).json(rows)
             }
         }else{
-            res.status(400).send({error: "userId is undefined"})
+            res.status(400).send({error: "keyId is not valid"})
         }
         
     }catch(err){
@@ -99,7 +98,7 @@ router.get('/domain',async (req,res) =>{
                 res.status(200).json(rows[0][0])
             }
         }else{
-            res.status(400).send({error: "userId is undefined"})
+            res.status(400).send({error: "userId is not valid"})
         }
         
     }catch(err){
@@ -119,7 +118,7 @@ router.get('/list',async (req,res) =>{
                 res.status(200).json(rows[0])
             }
         }else{
-            res.status(400).send({error: "userId is undefined"})
+            res.status(400).send({error: "userId is not valid"})
         }
         
     }catch(err){
@@ -127,5 +126,27 @@ router.get('/list',async (req,res) =>{
     }
 })
 
-
+router.post('/create',async (req,res) =>{
+    try{
+        const domain= req.body
+        const userId= parseInt(domain.userId)        
+        if(!isNaN(userId)){
+            const keyCode= randomBytes(15).toString('hex')
+           try{
+                const[rows,fields]= await pool.execute(`
+                    CALL createDomain( ? , ? , ? );    
+                `, [userId, domain.domainName, keyCode])
+                res.status(200).send(rows)
+           }catch(err){
+                res.status(500).send(err)
+           }
+        }else{
+            res.status(403).send({error: "userId is not valid"})
+        }
+        
+    }catch(err){
+        
+        res.status(403).json(err)
+    }
+})
 export default router
