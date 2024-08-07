@@ -11,7 +11,7 @@ router.post('/:domainId/:statId',async (req,res) =>{
         const userAgent = req.headers['user-agent'];
         ip==='::1' ?? res.status('403').json({error: 'Ip requested was ::1'})
         try{
-            const {data}= await axios.get(`http://ip-api.com/json/181.31.237.160`)
+            const {data}= await axios.get(`http://ip-api.com/json/${ip}`)
             const ubication= `${data.country}, ${data.regionName}, ${data.city}`
             const currentUtcTime = new Date();
             if(data.status==='fail'){
@@ -28,7 +28,7 @@ router.post('/:domainId/:statId',async (req,res) =>{
             }else if(err.sqlState==='55000'){
                 res.status(401).send({message: "COUNTER IS PAUSED."})
             }else{
-                res.status(500).send({message: "SOM TING WONG."})
+                res.status(500).send({message: "SQL ERROR."})
             }
         }
     }catch(err){
