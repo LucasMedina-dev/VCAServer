@@ -28,7 +28,7 @@ router.post('/:domainId/:statId',async (req,res) =>{
             }else if(err.sqlState==='55000'){
                 res.status(401).send({message: "COUNTER IS PAUSED."})
             }else{
-                res.status(500).send({message: "SQL ERROR."})
+                res.status(500).send(err)
             }
         }
     }catch(err){
