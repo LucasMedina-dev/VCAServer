@@ -1,7 +1,7 @@
 import express from "express";
 import domainRoutes from "./routes/domainRoutes.js";
 import hitRoutes from "./routes/hitRoutes.js";
-import cors from 'express'
+import cors from 'cors'
 
 const app = express();
 const URL= 'https://visitorcounterapi.vercel.app'
@@ -17,7 +17,11 @@ const corsMiddleware = (req, res, next) => {
 app.set('trust proxy', true);
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-app.use(cors())
+app.use(cors({
+  origin: 'https://visitorcounterapi.vercel.app',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}));
 app.use("/hit", hitRoutes);
 app.use(corsMiddleware)
 app.use("/domains", domainRoutes);
