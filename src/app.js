@@ -4,7 +4,7 @@ import hitRoutes from "./routes/hitRoutes.js";
 import cors from 'express'
 
 const app = express();
-const URL= 'http://localhost:4200'
+const URL= 'https://visitorcounterapi.vercel.app'
 const corsMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
   res.header("Access-Control-Allow-Headers", "KEY, Content-Type");
@@ -22,5 +22,4 @@ app.use("/hit", hitRoutes);
 app.use(corsMiddleware)
 app.use("/domains", domainRoutes);
 
-app.listen(3000);
-console.log("Listening at port 3000");
+app.listen(process.env.PORT);
