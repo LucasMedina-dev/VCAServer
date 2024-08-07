@@ -9,9 +9,9 @@ const corsMiddleware = (req, res, next) => {
   const origin = req.headers.origin;
   res.header("Access-Control-Allow-Headers", "KEY, Content-Type");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Origin", URL);
-  //next()
-  origin === URL ? next() : res.status(403).json({ error: "Forbidden" }); // Solo next para pruebas locales, esta linea para permitir localhost:4200
+  //res.header("Access-Control-Allow-Origin", URL);
+  next()
+  //origin === URL ? next() : res.status(403).json({ error: "Forbidden" }); // Solo next para pruebas locales, esta linea para permitir localhost:4200
 };
 
 app.set('trust proxy', true);
