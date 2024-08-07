@@ -4,7 +4,7 @@ import hitRoutes from "./routes/hitRoutes.js";
 import cors from 'cors';
 
 const app = express();
-const URL = 'https://visitorcounterapi.vercel.app';
+const URL = 'http://visitorcounterapi.vercel.app';
 
 app.set('trust proxy', true);
 
