@@ -6,7 +6,7 @@ import cors from 'cors';
 
 const app = express();
 const URL = 'http://localhost:4200';
-
+//https://visitorcounterapi.vercel.app
 app.set('trust proxy', true);
 
 app.use('/domains', cors({
