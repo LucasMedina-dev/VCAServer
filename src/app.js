@@ -5,7 +5,8 @@ import statRoutes from "./routes/statRoutes.js";
 import cors from 'cors';
 
 const app = express();
-const URL = 'http://localhost:4200';
+const URL = 'https://vcaserver.onrender.com';
+//https://vcaserver.onrender.com
 
 app.set('trust proxy', true);
 

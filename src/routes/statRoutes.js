@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import { pool } from '../config.js';
-import axios from 'axios'
 const router= Router()
 
 router.get('/:domainId/:statId',async (req,res) =>{
