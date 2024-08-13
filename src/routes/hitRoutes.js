@@ -1,5 +1,7 @@
 import {Router} from 'express';
 import { pool } from '../config.js';
+import axios from 'axios'
+
 const router= Router()
 
 router.get('/:domainId/:statId',async (req,res) =>{
@@ -10,7 +12,7 @@ router.get('/:domainId/:statId',async (req,res) =>{
         const userAgent = req.headers['user-agent'];
         ip==='::1' ?? res.status('403').json({error: 'Ip requested was ::1'})
         try{
-            const {data}= await axios.get(`http://ip-api.com/json/${ip}`)
+            const {data}= await axios.get(`http://ip-api.com/json/181.93.172.58`)
             const ubication= `${data.country}, ${data.regionName}, ${data.city}`
             const currentUtcTime = new Date();
             if(data.status==='fail'){
@@ -18,7 +20,7 @@ router.get('/:domainId/:statId',async (req,res) =>{
             }else{
                 const [rows,fields]= await pool.execute(`
                     CALL registerHit( ? , ? , ? , ? , ? , ? , ? , ? , ? )
-                `,[parseInt(statId), ip, ubication, userAgent, data.lat, data.lon, currentUtcTime, domainId, API_KEY])
+                `,[parseInt(statId), '181.93.172.58', ubication, userAgent, data.lat, data.lon, currentUtcTime, domainId, API_KEY])
                 res.status(200).send({message: "Hit sucessfuly registered."})
             }
         }catch(err){
