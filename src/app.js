@@ -5,7 +5,7 @@ import statRoutes from "./routes/statRoutes.js";
 import cors from 'cors';
 
 const app = express();
-const URL = 'http://localhost:4200';
+const URL = 'https://visitorcounterapi.vercel.app';
 //https://visitorcounterapi.vercel.app
 app.set('trust proxy', true);
 
