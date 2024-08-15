@@ -5,22 +5,30 @@ import statRoutes from "./routes/statRoutes.js";
 import cors from 'cors';
 
 const app = express();
-const URL = 'http://localhost:4200';
+const URL = 'https://visitorcounterapi.vercel.app';
 //https://visitorcounterapi.vercel.app
 app.set('trust proxy', true);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/domains', cors({
   origin: URL,
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
-}));
+}),domainRoutes);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use('/hit', cors({
+  origin: '*',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}),hitRoutes);
 
-app.use("/hit", hitRoutes);
-app.use("/stats", statRoutes);
-app.use("/domains", domainRoutes);
+app.use('/stats', cors({
+  origin: '*',
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization'
+}),statRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server running on port ${process.env.PORT || 3000}`);
