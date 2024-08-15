@@ -21,13 +21,13 @@ app.use('/domains', cors({
 app.use('/hit', cors({
   origin: '*',
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
+  allowedHeaders: 'Content-Type,API_KEY'
 }),hitRoutes);
 
 app.use('/stats', cors({
   origin: '*',
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
+  allowedHeaders: 'Content-Type,API_KEY'
 }),statRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
