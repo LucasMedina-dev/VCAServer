@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import { pool } from '../config.js';
 import axios from 'axios'
-
+import moment from 'moment-timezone'
 const router= Router()
 
 router.get('/:domainId/:statId',async (req,res) =>{
@@ -12,15 +12,15 @@ router.get('/:domainId/:statId',async (req,res) =>{
         const userAgent = req.headers['user-agent'];
         ip==='::1' ?? res.status('403').json({error: 'Ip requested was ::1'})
         try{
-            const {data}= await axios.get(`http://ip-api.com/json/${ip}`)
-            const ubication= `${data.country}, ${data.regionName}, ${data.city}`
-            const currentUtcTime = new Date();
+            const {data}= await axios.get(`http://ip-api.com/json/${ip}`);
+            const ubication = `${data.country}, ${data.regionName}, ${data.city}`;
+            const buenosAiresTime = moment().tz('America/Argentina/Buenos_Aires').toDate();
             if(data.status==='fail'){
                 res.status(500).json({error: 'Geolocalizer returned error.'})
             }else{
                 const [rows,fields]= await pool.execute(`
                     CALL registerHit( ? , ? , ? , ? , ? , ? , ? , ? , ? )
-                `,[parseInt(statId), ip, ubication, userAgent, data.lat, data.lon, currentUtcTime, domainId, API_KEY])
+                `,[parseInt(statId), ip, ubication, userAgent, data.lat, data.lon, buenosAiresTime, domainId, API_KEY])
                 res.status(200).send({message: "Hit sucessfuly registered."})
             }
         }catch(err){
