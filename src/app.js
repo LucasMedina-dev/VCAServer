@@ -6,7 +6,7 @@ import touchRoutes from "./routes/touchRoutes.js";
 import cors from 'cors';
 
 const app = express();
-const URL = 'https://visitorcounterapi.vercel.app';
+const URL = 'http://localhost:3000';
 //https://visitorcounterapi.vercel.app
 app.set('trust proxy', true);
 
