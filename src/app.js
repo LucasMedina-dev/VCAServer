@@ -2,6 +2,7 @@ import express from "express";
 import domainRoutes from "./routes/domainRoutes.js";
 import hitRoutes from "./routes/hitRoutes.js";
 import statRoutes from "./routes/statRoutes.js";
+import touchRoutes from "./routes/touchRoutes.js";
 import cors from 'cors';
 
 const app = express();
@@ -15,8 +16,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/domains', cors({
   origin: URL,
   methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
+  allowedHeaders: 'Content-Type'
 }),domainRoutes);
+
+app.use('/touch', cors({
+  origin: URL,
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type'
+}),touchRoutes);
 
 app.use('/hit', cors({
   origin: '*',
