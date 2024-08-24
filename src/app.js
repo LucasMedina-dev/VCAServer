@@ -21,19 +21,19 @@ app.use('/domains', cors({
 
 app.use('/touch', cors({
   origin: URL,
-  methods: 'GET,POST,PUT,DELETE',
+  methods: 'GET',
   allowedHeaders: 'Content-Type'
 }),touchRoutes);
 
 app.use('/hit', cors({
   origin: '*',
-  methods: 'GET,POST,PUT,DELETE',
+  methods: 'GET',
   allowedHeaders: 'Content-Type,API_KEY'
 }),hitRoutes);
 
 app.use('/stats', cors({
   origin: '*',
-  methods: 'GET,POST,PUT,DELETE',
+  methods: 'GET',
   allowedHeaders: 'Content-Type,API_KEY'
 }),statRoutes);
 
