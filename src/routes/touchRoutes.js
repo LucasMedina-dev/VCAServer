@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
             `,
       [buenosAiresTime, ip, userAgent]
     );
-    res.status(200).send(rows[0][0]);
+    res.status(200).send({message:'Thanks for your visit!'});
   } catch (err) {
     if (err.sqlState === "45000") {
       res
